@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">Task Details</h1>
+<div class="box">
+    <h5 class="title is-5">{{ task.title }}</h5>
+    <p class="content">{{ task.description }}</p>
+    <p>Status: {{ task.status }}</p>
+    <p>Created: {{ task.created_at }}</p>
+    <p>Updated: {{ task.updated_at }}</p>
+    <div class="buttons">
+        <a href="/tasks/{{ task.id }}/edit" class="button is-warning">Edit</a>
+        <a href="/tasks/{{ task.id }}/delete" class="button is-danger">Delete</a>
+        <a href="/tasks/" class="button is-danger">Lists tasks</a>
+    </div>
+</div>
+{% endblock %}

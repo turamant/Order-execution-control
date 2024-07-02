@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">Create Task</h1>
+
+<form method="post" class="box">
+    <div class="field">
+        <label class="label" for="title">Title</label>
+        <div class="control">
+            <input type="text" class="input" id="title" name="title" required>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label" for="description">Description</label>
+        <div class="control">
+            <textarea class="textarea" id="description" name="description" required></textarea>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label" for="assigned_to">Assigned To</label>
+        <div class="control">
+            <input type="text" class="input" id="assigned_to" name="assigned_to" required>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label" for="due_date">Due Date</label>
+        <div class="control">
+            <input type="datetime-local" class="input" id="due_date" name="due_date" required>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label" for="status">Status</label>
+        <div class="control">
+            <div class="select">
+                <select id="status" name="status">
+                    <option value="todo">To Do</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="done">Done</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="control">
+            <button type="submit" class="button is-primary">Create</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

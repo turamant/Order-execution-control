@@ -1,15 +1,25 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from database import Base, engine
-from routers.task_router import task_router
+from routers.task_web_router import task_web_router
+from routers.task_api_router import task_api_router
 
 
 # Создаем все таблицы
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+templates = Jinja2Templates(directory="templates")
+
 
 # Регистрируем роутер для задач
-app.include_router(task_router)
+app.include_router(task_api_router)
+app.include_router(task_web_router)
+
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse("home.html", {"request": request})
 
 
 if __name__ == "__main__":
