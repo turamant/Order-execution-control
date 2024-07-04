@@ -1,13 +1,10 @@
 from fastapi import (APIRouter, Depends,
                      HTTPException, Request)
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from datetime import datetime
 
-from models.responsible import Responsible
-from models.status import Status
-from models.task import Task
 from schemas.responsible import ResponsibleDB
 from schemas.status import StatusDB
 from schemas.task import TaskDB
@@ -70,14 +67,18 @@ async def store_task(request: Request, db: Session = Depends(get_db)):
     db.add(new_task)
     db.commit()
 
-    return templates.TemplateResponse("task_detail.html", {"request": request, "task": new_task})
+    return templates.TemplateResponse("task_detail.html",
+                                      {"request": request,
+                                       "task": new_task})
 
 @task_web_router.get("/{task_id}", response_class=HTMLResponse)
 async def read_task(request: Request, task_id: int, db: Session = Depends(get_db)):
     db_task = db.query(TaskDB).filter(TaskDB.id == task_id).first()
     if db_task is None:
         raise HTTPException(status_code=404, detail="Task not found")
-    return templates.TemplateResponse("task_detail.html", {"request": request, "task": db_task})
+    return templates.TemplateResponse("task_detail.html",
+                                      {"request": request,
+                                       "task": db_task})
 
 
 
