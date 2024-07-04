@@ -3,6 +3,13 @@
 <p>Python FastAPI app</p>
 <p>RESTfull API services</p>
 
+<p>You can monitor the execution of orders via the web. As a result, the manager gets rid of routine and can devote his time to more important areas of work.
+</p>
+<p>Task</p>
+<p>Responsible</p>
+<p>Status</p>
+<p>Comment</p>
+
 <p>This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
