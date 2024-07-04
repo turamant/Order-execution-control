@@ -1,5 +1,5 @@
 <h2>Control execution order</h2>
-<p>GNU license</p>
+
 <p>Python FastAPI app</p>
 <p>RESTfull API services</p>
 
@@ -9,6 +9,8 @@
 <p>Responsible</p>
 <p>Status</p>
 <p>Comment</p>
+
+<p>GNU license</p>
 
 <p>This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
