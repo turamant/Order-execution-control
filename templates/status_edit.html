@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">Edit Status</h1>
+<form method="post" class="box">
+    <div class="field">
+        <label class="label" for="title">Name</label>
+        <div class="control">
+            <input type="text" class="input" id="name" name="name" value="{{ status.name }}" required>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label" for="description">Description</label>
+        <div class="control">
+            <textarea class="textarea" id="description" name="description" required>{{ status.description }}</textarea>
+        </div>
+    </div>
+    
+    <div class="field">
+        <div class="control">
+            <button type="submit" class="button is-primary">Save</button>
+        </div>
+    </div>
+</form>
+<div class="buttons">
+    <a href="/statuses/" class="button is-danger">List statuses</a>
+</div>
+{% endblock %}

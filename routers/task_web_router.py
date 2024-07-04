@@ -45,7 +45,8 @@ async def create_task(request: Request, db: Session = Depends(get_db)):
     return templates.TemplateResponse("task_create.html",
                                        {"request": request,
                                         "responsibles": responsibles,
-                                        "statuses": statuses})
+                                        "statuses": statuses
+                                        })
 
 @task_web_router.post("/create", response_class=HTMLResponse)
 async def store_task(request: Request, db: Session = Depends(get_db)):

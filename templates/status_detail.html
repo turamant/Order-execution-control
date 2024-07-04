@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">Status Details</h1>
+<div class="box">
+    <h5 class="title is-5">{{ status.name }}</h5>
+    <p class="content">{{ status.description }}</p>
+    
+    <p>Status: {{ status.description }}</p>
+    
+    <div class="buttons">
+        <a href="/statuses/{{ status.id }}/edit" class="button is-warning">Edit</a>
+        <a href="/statuses/{{ status.id }}/delete" class="button is-danger">Delete</a>
+        <a href="/statuses/" class="button is-danger">Lists status</a>
+    </div>
+</div>
+{% endblock %}
