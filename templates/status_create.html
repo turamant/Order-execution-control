@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">Create Status</h1>
+<div class="box">
+    <form method="post" action="/statuses/create">
+        <div class="field">
+            <label class="label" for="name">Name</label>
+            <div class="control">
+                <input class="input" type="text" id="name" name="name" required>
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <button class="button is-primary" type="submit">Create</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

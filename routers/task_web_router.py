@@ -4,11 +4,14 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from datetime import datetime
+
+from models.responsible import Responsible
+from models.status import Status
+from models.task import Task
+from schemas.responsible import ResponsibleDB
+from schemas.status import StatusDB
 from schemas.task import TaskDB
 from database import SessionLocal
-from models.task import Task
-from typing import Annotated, List
-
 
 
 
@@ -31,34 +34,44 @@ def get_db():
 
 @task_web_router.get("/", response_class=HTMLResponse)
 async def tasks(request: Request, db: Session = Depends(get_db)):
-    tasks = db.query(TaskDB).all()
-    return templates.TemplateResponse("task_list.html", {"request": request, "tasks": tasks})
+    db_tasks = db.query(TaskDB).all()
+    return templates.TemplateResponse("task_list.html",
+                                      {"request": request,
+                                       "tasks": db_tasks
+                                       })
+
 
 @task_web_router.get("/create", response_class=HTMLResponse)
-async def create_task(request: Request):
-    return templates.TemplateResponse("task_create.html", {"request": request})
+async def create_task(request: Request, db: Session = Depends(get_db)):
+    responsibles = db.query(ResponsibleDB).all()
+    statuses = db.query(StatusDB).all()
+    return templates.TemplateResponse("task_create.html",
+                                       {"request": request,
+                                        "responsibles": responsibles,
+                                        "statuses": statuses})
 
 @task_web_router.post("/create", response_class=HTMLResponse)
 async def store_task(request: Request, db: Session = Depends(get_db)):
     form = await request.form()
     title = form.get("title")
     description = form.get("description")
-    assigned_to = form.get("assigned_to")
+    responsible_id = int(form.get("responsible_id"))
+    status_id = int(form.get("status_id"))
     due_date_str = form.get("due_date")
     due_date = datetime.fromisoformat(due_date_str)
-    status = form.get("status")
 
     new_task = TaskDB(
         title=title,
         description=description,
-        assigned_to=assigned_to,
-        due_date=due_date,
-        status=status
+        responsible_id=responsible_id,
+        status_id=status_id,
+        due_date=due_date
     )
     db.add(new_task)
     db.commit()
 
     return templates.TemplateResponse("task_detail.html", {"request": request, "task": new_task})
+
 @task_web_router.get("/{task_id}", response_class=HTMLResponse)
 async def read_task(request: Request, task_id: int, db: Session = Depends(get_db)):
     db_task = db.query(TaskDB).filter(TaskDB.id == task_id).first()
@@ -71,27 +84,36 @@ async def read_task(request: Request, task_id: int, db: Session = Depends(get_db
 @task_web_router.get("/{task_id}/edit", response_class=HTMLResponse)
 async def edit_task(request: Request, task_id: int, db: Session = Depends(get_db)):
     db_task = db.query(TaskDB).filter(TaskDB.id == task_id).first()
+    responsibles = db.query(ResponsibleDB).all()
+    statuses = db.query(StatusDB).all()
     if db_task is None:
         raise HTTPException(status_code=404, detail="Task not found")
-    return templates.TemplateResponse("task_edit.html", {"request": request, "task": db_task})
+    return templates.TemplateResponse("task_edit.html", {"request": request,
+                                                         "task": db_task,
+                                                         "responsibles": responsibles,
+                                                         "statuses": statuses})
 
 @task_web_router.post("/{task_id}/edit", response_class=HTMLResponse)
 async def update_task(request: Request, task_id: int, db: Session = Depends(get_db)):
     db_task = db.query(TaskDB).filter(TaskDB.id == task_id).first()
     if db_task is None:
         raise HTTPException(status_code=404, detail="Task not found")
-
+    
     form = await request.form()
     db_task.title = form.get("title")
     db_task.description = form.get("description")
-    db_task.assigned_to = form.get("assigned_to")
+    db_task.responsible_id = form.get("responsible_id")
+    db_task.status_id = form.get("status_id")
     due_date_str = form.get("due_date")
     db_task.due_date = datetime.fromisoformat(due_date_str)
-    db_task.status = form.get("status")
+    
     db_task.updated_at = datetime.now()
 
     db.commit()
-    return templates.TemplateResponse("task_detail.html", {"request": request, "task": db_task})
+    return templates.TemplateResponse("task_detail.html",
+                                      {"request": request,
+                                       "task": db_task,
+                                       })
 
 
 @task_web_router.get("/{task_id}/delete", response_class=HTMLResponse)
@@ -105,7 +127,31 @@ async def delete_task(request: Request, task_id: int, db: Session = Depends(get_
     return templates.TemplateResponse("task_list.html", {"request": request, "tasks": db.query(TaskDB).all()})
 
 
+@task_web_router.get("/statuses/create", response_class=HTMLResponse)
+async def create_status_get(request: Request):
+    return templates.TemplateResponse("status_create.html", {"request": request})
 
+@task_web_router.post("/statuses/create", response_class=HTMLResponse)
+async def create_status_post(request: Request, db: Session = Depends(get_db)):
+    form = await request.form()
+    name = form.get("name")
+    new_status = StatusDB(name=name)
+    db.add(new_status)
+    db.commit()
+    return RedirectResponse(url="/tasks", status_code=302)
+
+@task_web_router.get("/responsibles/create", response_class=HTMLResponse)
+async def create_responsible_get(request: Request):
+    return templates.TemplateResponse("responsible_create.html", {"request": request})
+
+@task_web_router.post("/responsibles/create", response_class=HTMLResponse)
+async def create_responsible_post(request: Request, db: Session = Depends(get_db)):
+    form = await request.form()
+    name = form.get("name")
+    new_responsible = ResponsibleDB(name=name)
+    db.add(new_responsible)
+    db.commit()
+    return RedirectResponse(url="/tasks", status_code=302)
 
 
 

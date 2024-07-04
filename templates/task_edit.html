@@ -16,27 +16,35 @@
         </div>
     </div>
     <div class="field">
-        <label class="label" for="assigned_to">Assigned To</label>
+        <label class="label" for="responsible_id">Responsible</label>
         <div class="control">
-            <input type="text" class="input" id="assigned_to" name="assigned_to" value="{{ task.assigned_to }}" required>
+            <div class="select">
+                <select id="responsible_id" name="responsible_id" required>
+                    <option value="">Select Responsible</option>
+                    {% for responsible in responsibles %}
+                    <option value="{{ responsible.id }}" {% if responsible.id == task.responsible_id %}selected{% endif %}>{{ responsible.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label" for="status_id">Status</label>
+        <div class="control">
+            <div class="select">
+                <select id="status_id" name="status_id" required>
+                    <option value="">Select Status</option>
+                    {% for status in statuses %}
+                    <option value="{{ status.id }}" {% if status.id == task.status_id %}selected{% endif %}>{{ status.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
     </div>
     <div class="field">
         <label class="label" for="due_date">Due Date</label>
         <div class="control">
-            <input type="datetime-local" class="input" id="due_date" name="due_date" value="{{ task.due_date.isoformat() }}" required>
-        </div>
-    </div>
-    <div class="field">
-        <label class="label" for="status">Status</label>
-        <div class="control">
-            <div class="select">
-                <select id="status" name="status">
-                    <option value="todo" {% if task.status == 'todo' %}selected{% endif %}>To Do</option>
-                    <option value="in_progress" {% if task.status == 'in_progress' %}selected{% endif %}>In Progress</option>
-                    <option value="done" {% if task.status == 'done' %}selected{% endif %}>Done</option>
-                </select>
-            </div>
+            <input type="date" class="input" id="due_date" name="due_date" value="{{ task.due_date.strftime('%Y-%m-%d') }}" required>
         </div>
     </div>
     <div class="field">
@@ -46,6 +54,7 @@
     </div>
 </form>
 <div class="buttons">
-    <a href="/tasks/" class="button is-danger">Lists tasks</a>
+    <a href="/tasks/" class="button is-danger">List Tasks</a>
 </div>
 {% endblock %}
+
