@@ -12,6 +12,13 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
+@app.exception_handler(404)
+async def not_found_exception_handler(request: Request, exc: Exception):
+    return templates.TemplateResponse("404.html",
+                                      {"request": request},
+                                       status_code=404)
+
+
 
 # Регистрируем роутер для задач
 app.include_router(task_api_router)
