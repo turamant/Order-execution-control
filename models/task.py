@@ -19,17 +19,5 @@ class Task(BaseModel):
 
 
 
-class TaskDetail(BaseModel):
-    id: int
-    title: str
-    description: str
-    responsible_id: int
-    status_id: int
-    due_date: datetime
-    created_at: datetime
-    updated_at: datetime
-
-    responsible: Optional["Responsible"]
-    status: Optional["Status"]
 
 
