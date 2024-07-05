@@ -14,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for task in tasks %}
+        {% for task in items %}
         <tr>
             <td>{{ task.id }}</td>
             <td>{{ task.title }}</td>
@@ -37,3 +37,4 @@
     <a href="/tasks/create" class="button is-primary">Create</a>
 </div>
 {% endblock %}
+

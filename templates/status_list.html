@@ -12,16 +12,16 @@
         </tr>
     </thead>
     <tbody>
-        {% for status in statuses %}
+        {% for status in items %}
         <tr>
             <td>{{ status.id }}</td>
             <td>{{ status.name }}</td>
             <td>{{ status.description }}</td>
             <td>
                 <div class="buttons">
-                    <a href="/statuses/{{ status.id }}" class="button is-warning">View</a>
-                    <a href="/statuses/{{ status.id }}/edit" class="button is-warning">Edit</a>
-                    <a href="/statuses/{{ status.id }}/delete" class="button is-danger">Delete</a>
+                    <a href="/statuss/{{ status.id }}" class="button is-warning">View</a>
+                    <a href="/statuss/{{ status.id }}/edit" class="button is-warning">Edit</a>
+                    <a href="/statuss/{{ status.id }}/delete" class="button is-danger">Delete</a>
 
                 </div>
             </td>
@@ -31,6 +31,6 @@
 </table>
 <div class="buttons">
     <a href="/" class="button is-danger">Home</a>
-    <a href="/statuses/create" class="button is-primary">Create</a>
+    <a href="/statuss/create" class="button is-primary">Create</a>
 </div>
 {% endblock %}

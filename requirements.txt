@@ -5,3 +5,6 @@ sqlalchemy
 databases
 
 jinja2
+
+python-jose
+passlib

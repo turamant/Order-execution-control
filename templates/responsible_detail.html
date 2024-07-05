@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">Responsible Details</h1>
+<div class="box">
+    <h5 class="title is-5">{{ item.name }}</h5>
+    <p class="content">e-mail: {{ item.email }}</p>
+    <p class="content">phone:: {{ item.phone }}</p>
+    
+    <div class="buttons">
+        <a href="/responsibles/{{ item.id }}/edit" class="button is-warning">Edit</a>
+        <a href="/responsibles/{{ item.id }}/delete" class="button is-danger">Delete</a>
+        <a href="/responsibles/" class="button is-danger">Lists responsibles</a>
+    </div>
+</div>
+{% endblock %}

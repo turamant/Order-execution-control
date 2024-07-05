@@ -1,12 +1,9 @@
 from datetime import datetime
-from sqlalchemy import (ForeignKey,Column, Integer, String, DateTime,
-                        Text)
+from sqlalchemy import (ForeignKey, Column, Integer, String, DateTime, Text)
 from sqlalchemy.orm import relationship
-
 from database import Base
 from .responsible import ResponsibleDB
 from .status import StatusDB
-
 
 class TaskDB(Base):
     __tablename__ = "tasks"
@@ -22,3 +19,5 @@ class TaskDB(Base):
 
     responsible = relationship("ResponsibleDB", backref="tasks")
     status = relationship("StatusDB", backref="tasks")
+    comments = relationship("CommentDB", back_populates="task")
+

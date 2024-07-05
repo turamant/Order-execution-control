@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">Edit Status</h1>
+<h1 class="title">Edit Responsible</h1>
 <form method="post" class="box">
     <div class="field">
         <label class="label" for="name">Name</label>
@@ -10,11 +10,18 @@
         </div>
     </div>
     <div class="field">
-        <label class="label" for="description">Description</label>
+        <label class="label" for="email">Email</label>
         <div class="control">
-            <textarea class="textarea" id="description" name="description" required>{{ item.description }}</textarea>
+            <input type="text" class="input" id="email" name="email" value="{{item.email }}" required>
         </div>
     </div>
+    <div class="field">
+        <label class="label" for="phone">Phon xxx-xxx-xxxx:</label>
+        <div class="control">
+            <input class="input" type="text" id="phone" name="phone" placeholder="xxx-xxx-xxxx" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+        </div>
+    </div>
+    
     
     <div class="field">
         <div class="control">
@@ -23,6 +30,6 @@
     </div>
 </form>
 <div class="buttons">
-    <a href="/statuss/" class="button is-danger">List statuses</a>
+    <a href="/responsibles/" class="button is-danger">List responsibles</a>
 </div>
 {% endblock %}

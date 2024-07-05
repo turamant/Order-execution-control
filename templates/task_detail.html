@@ -3,18 +3,49 @@
 {% block content %}
 <h1 class="title">Task Details</h1>
 <div class="box">
-    <h5 class="title is-5">{{ task.title }}</h5>
-    <p class="content">{{ task.description }}</p>
-    <p>Responsible: {{ task.responsible.name }}</p>
-    <p>Status: {{ task.status.name }}</p>
-    <p>Due Date: {{ task.due_date }}</p>
-    <p>Created: {{ task.created_at }}</p>
-    <p>Updated: {{ task.updated_at }}</p>
+    <h5 class="title is-5">Title: {{ item.title }}</h5>
+    <p class="content">Description: {{ item.description }}</p>
+    <p class="content">Responsible: {{ item.responsible.name }}</p>
+    <p class="content">Status: {{ item.status.name }}</p>
+    <p class="content">Due Date: {{ item.due_date }}</p>
+    <p class="content">Created: {{ item.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+    <p class="content">Updated: {{ item.updated_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
     <div class="buttons">
-        <a href="/tasks/{{ task.id }}/edit" class="button is-warning">Edit</a>
-        <a href="/tasks/{{ task.id }}/delete" class="button is-danger">Delete</a>
+        <a href="/tasks/{{ item.id }}/edit" class="button is-warning">Edit</a>
+        <a href="/tasks/{{ item.id }}/delete" class="button is-danger">Delete</a>
         <a href="/tasks/" class="button is-danger">Lists tasks</a>
     </div>
 </div>
+<h2>Comments</h2>
+<ul>
+    {% for comment in item.comments %}
+    <li>
+        <strong>{{ comment.author }}</strong> - {{ comment.created_at.strftime('%Y-%m-%d %H:%M:%S') }}
+        <p>{{ comment.text }}</p>
+        <a href="{{ url_for(tag ~ '_delete_comment', item_id=item.id, comment_id=comment.id) }}">Delete</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>Add Comment</h2>
+<form method="post" action="{{ url_for('create_comment', item_id=item.id) }}">
+    <div class="field">
+        <label class="label" for="author">Author</label>
+        <div class="control">
+            <input class="input" type="text" id="author" name="author" required>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label" for="text">Comment</label>
+        <div class="control">
+            <textarea class="textarea" id="text" name="text" required></textarea>
+        </div>
+    </div>
+    <div class="field">
+        <div class="control">
+            <button class="button is-primary" type="submit">Add Comment</button>
+        </div>
+    </div>
+</form>
 {% endblock %}
 

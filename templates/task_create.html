@@ -7,13 +7,13 @@
         <div class="field">
             <label class="label" for="title">Title</label>
             <div class="control">
-                <input class="input" type="text" id="title" name="title" required>
+                <input class="input" type="text" id="title" name="title" placeholder="name task" required>
             </div>
         </div>
         <div class="field">
             <label class="label" for="description">Description</label>
             <div class="control">
-                <textarea class="textarea" id="description" name="description" required></textarea>
+                <textarea class="textarea" id="description" name="description" placeholder="task description" required></textarea>
             </div>
         </div>
         <div class="field">
@@ -22,8 +22,8 @@
                 <div class="select">
                     <select id="responsible_id" name="responsible_id" required>
                         <option value="">Select Responsible</option>
-                        {% for responsible in responsibles %}
-                        <option value="{{ responsible.id }}">{{ responsible.name }}</option>
+                        {% for responsible in responsible %}
+                        <option value="{{ responsible.id }}" {% if responsible.id == item.responsible_id %}selected{% endif %}>{{ responsible.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -35,8 +35,8 @@
                 <div class="select">
                     <select id="status_id" name="status_id" required>
                         <option value="">Select Status</option>
-                        {% for status in statuses %}
-                        <option value="{{ status.id }}">{{ status.name }}</option>
+                        {% for status in status %}
+                        <option value="{{ status.id }}" {% if status.id == item.status_id %}selected{% endif %}>{{ status.name }}</option>
                         {% endfor %}
                     </select>
                 </div>

@@ -12,16 +12,18 @@
         </tr>
     </thead>
     <tbody>
-        {% for responsible in responsibles %}
+        {% for responsible in items %}
         <tr>
             <td>{{ responsible.id }}</td>
             <td>{{ responsible.name }}</td>
             <td>{{ responsible.email }}</td>
             <td>{{ responsible.phone }}</td>
+            <td>
                 <div class="buttons">
-                    <a href="#" class="button is-primary">View</a>
-                    <a href="#" class="button is-warning">Edit</a>
-                    <a href="#" class="button is-danger">Delete</a>
+                    <a href="/responsibles/{{ responsible.id }}" class="button is-warning">View</a>
+                    <a href="/responsibles/{{ responsible.id }}/edit" class="button is-warning">Edit</a>
+                    <a href="/responsibles/{{ responsible.id }}/delete" class="button is-danger">Delete</a>
+
                 </div>
             </td>
         </tr>
@@ -30,6 +32,6 @@
 </table>
 <div class="buttons">
     <a href="/" class="button is-danger">Home</a>
-    <a href="/tasks/create" class="button is-primary">Create</a>
+    <a href="/responsibles/create" class="button is-primary">Create</a>
 </div>
 {% endblock %}
